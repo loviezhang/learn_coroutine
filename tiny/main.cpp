@@ -1,25 +1,20 @@
 #include <stdio.h>
-#include "coroutine.h"
 
-int func(int p) {
-    return 0;
+int func2(int a, int b) {
+    int c = a + b;
+    return c;
 }
 
-int co_func(int p) {
-    return 0;
+int func1(int a) {
+    int x = 2;
+    int d = func2(a, x);
+    return d;
 }
 
 int main(int argc, char** argv) {
-    int ret = 0;
-
-    ret = func(2);
-
-    /*
-    co_context* ctx = co_create(co_func);
-    co_resume(ctx);
-
-    co_destroy(ctx);
-    */
-
-    return 0;
+    return func1(1);
 }
+
+
+
+

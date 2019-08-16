@@ -1,5 +1,5 @@
 G++ = g++
-G++_FLAGS = -c
+G++_FLAGS = -c -O0
 LD_FLAGS =
 
 SOURCE_FILE = $(wildcard *.cpp)
