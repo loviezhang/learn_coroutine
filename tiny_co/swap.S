@@ -1,8 +1,9 @@
 .globl co_swap
 .type  co_swap, @function
 
+// int co_swap(coctx* from, coctx* to)
 co_swap:
-	leaq 8(%rsp), %rax   // rax = rsp + 8，也就是原始的rsp
+	leaq 8(%rsp), %rax   // rax = rsp + 8，也就是去除返回地址后原始的rsp
 	leaq 112(%rdi), %rsp // rdi + 112 = &(from->regs[14])，这是是让rsp执行from->regs的结尾
 	pushq %rax           // from->regs[13] = rsp
 	pushq %rbx           // from->regs[12] = rbx

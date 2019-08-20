@@ -2,23 +2,28 @@
 #include "coroutine.h"
 
 coctx* co_func1;
+coctx* co_func2;
 
 void func1(uint64_t arg) {
-    printf("step1 in func1, arg %lu\n", arg);
-    co_swap(co_func1, co_main);
-    printf("step2 in func1, arg %lu\n", arg);
+    printf("func1: befor co_swap\n");
+    co_swap(co_func1, co_func2);
+    printf("func1: after co_swap\n");
+}
+
+void func2(uint64_t arg) {
+    printf("func2: befor co_swap\n");
+    co_swap(co_func2, co_func1);
+    printf("func2: befor co_swap\n");
 }
 
 int main(int argc, char** argv) {
     co_func1 = co_create(func1, 10);
+    co_func2 = co_create(func2, 20);
 
-    do {
-        printf("swap co_func\n");
-        co_swap(co_main, co_func1);
-    } while (!co_func1->finish);
+    co_swap(co_main, co_func1);
 
-    printf("co_func finish\n");
     co_release(co_func1);
+    co_release(co_func2);
 
     return 0;
 }

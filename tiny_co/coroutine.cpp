@@ -9,16 +9,17 @@ coctx* co_main = NULL;
 // 从当前协程切换到其他协程
 extern int co_swap(coctx* from, coctx* to) asm("co_swap");
 
-static void co_entry(coctx* ctx, co_func fn, int64_t arg) {
+static void co_entry(coctx* ctx, co_func fn, uint64_t arg) {
     fn(arg);
     // 标记协程已完成
     ctx->finish = true;
+    // 切回主协程
     co_swap(ctx, co_main);
 }
 
 coctx* co_create(co_func fn, uint64_t arg) {
     if (co_main == NULL) {
-        // 首次调用需创建main函数的协程帧
+        // 首次调用需创建主协程的协程帧
         co_main = (coctx*)calloc(1, sizeof(coctx));
     }
 
