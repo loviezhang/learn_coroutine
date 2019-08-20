@@ -14,7 +14,3 @@ int func1(int a) {
 int main(int argc, char** argv) {
     return func1(1);
 }
-
-
-
-
